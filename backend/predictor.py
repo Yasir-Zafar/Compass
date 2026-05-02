@@ -84,9 +84,10 @@ registry = ModelRegistry()
 
 
 # ── Helper ────────────────────────────────────────────────────────────────────
-def _proba_to_dict(proba: np.ndarray, label_order: list) -> dict:
+def _proba_to_dict(proba: np.ndarray, label_enc) -> dict:
     """Convert a probability array to a {label: probability} dict."""
-    return {label: float(p) for label, p in zip(label_order, proba[0])}
+    labels = label_enc.inverse_transform(np.arange(proba.shape[1]))
+    return {label: float(p) for label, p in zip(labels, proba[0])}
 
 
 def _save_upload(file_bytes: bytes, suffix: str) -> str:
@@ -183,7 +184,7 @@ async def predict_stream(
                 "event":         "modality",
                 "modality":      modality,
                 "label":         label,
-                "probabilities": _proba_to_dict(proba, registry.label_order),
+                "probabilities": _proba_to_dict(proba, registry.label_enc),
                 "top_feature":   top_feat,
                 "cv_f1":         registry.cv_scores[modality]["mean"],
             }
@@ -227,7 +228,7 @@ async def predict_stream(
         yield {
             "event":          "fusion",
             "label":          fusion_label,
-            "probabilities":  _proba_to_dict(fusion_proba, registry.label_order),
+            "probabilities":  _proba_to_dict(fusion_proba, registry.label_enc),
             "modality_shap":  sample_modality_shap,
             "confidence":     float(np.max(fusion_proba)),
         }

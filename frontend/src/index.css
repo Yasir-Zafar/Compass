@@ -6,11 +6,36 @@
 
 :root {
   --bg: #f2f6fc;
+  --bg-card: #ffffff;
+  --bg-tab: #f0f4fa;
   --text: #142033;
+  --text-primary: #142033;
+  --text-secondary: #617089;
+  --text-muted: #8a98ad;
   --muted: #617089;
   --card: #ffffff;
   --border: #d9e3f2;
   --primary: #1f6fe5;
+  --accent: #1f6fe5;
+  --accent-bg: #e8f0fe;
+  --success: #16a34a;
+  --success-bg: #dcfce7;
+  --warning: #d97706;
+  --warning-bg: #fef3c7;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --physio: #7c3aed;
+  --physio-bg: #ede9fe;
+  --motion: #2563eb;
+  --motion-bg: #dbeafe;
+  --voice: #0891b2;
+  --voice-bg: #cffafe;
+  --image: #be185d;
+  --image-bg: #fce7f3;
+  --fusion-bg: #fffbeb;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 2px 8px rgba(20, 42, 78, 0.05);
   --shadow-lg: 0 10px 30px rgba(20, 42, 78, 0.08);
 }
 

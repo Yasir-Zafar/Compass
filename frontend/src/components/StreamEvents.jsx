@@ -18,14 +18,22 @@ function StreamEvents({ events }) {
   if (events.length === 0) return null
 
   const modalityEvents = events.filter((e) => e.event === 'modality')
-  const processingEvents = events.filter((e) => e.event === 'processing')
   const errorEvents = events.filter((e) => e.event === 'error')
   const fusionEvent = events.find((e) => e.event === 'fusion')
+
+  const completedModalities = new Set([
+    ...modalityEvents.map((e) => e.modality),
+    ...errorEvents.map((e) => e.modality),
+  ])
+
+  const processingEvents = events.filter(
+    (e) => e.event === 'processing' && !completedModalities.has(e.modality),
+  )
 
   return (
     <div className="stream-events">
       {processingEvents.map((evt, i) => (
-        <div key={`proc-${i}`} className="stream-item processing">
+        <div key={`proc-${evt.modality}`} className="stream-item processing">
           <span className="stream-dot" />
           <span>Processing {modalityLabels[evt.modality] || evt.modality}...</span>
         </div>

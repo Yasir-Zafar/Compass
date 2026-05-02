@@ -13,21 +13,39 @@ from scipy.signal import find_peaks
 
 def extract_physio_features(csv_path: str) -> dict:
     df = pd.read_csv(csv_path)
+    df.columns = [str(col).strip() for col in df.columns]
+    normalized_map = {str(col).strip().lower(): col for col in df.columns}
+
+    def _resolve_column(*aliases: str) -> str:
+        for alias in aliases:
+            key = alias.strip().lower()
+            if key in normalized_map:
+                return normalized_map[key]
+        raise KeyError(f"Missing required physiologic column. Expected one of: {aliases}")
+
+    hr_col = _resolve_column("HR", "heart_rate", "heart rate")
+    gsr_col = _resolve_column("GSR", "eda", "skin_conductance", "skin conductance")
+    temp_col = _resolve_column("TEMP", "temperature", "temp_c", "temp")
+
     feats = {}
-    hr = df["HR"].values
+    hr = pd.to_numeric(df[hr_col], errors="coerce").dropna().values
+    gsr = pd.to_numeric(df[gsr_col], errors="coerce").dropna().values
+    temp = pd.to_numeric(df[temp_col], errors="coerce").dropna().values
+
+    if len(hr) < 2 or len(gsr) < 2 or len(temp) < 2:
+        raise ValueError("Physiologic CSV requires at least 2 numeric rows for HR/GSR/TEMP.")
+
     feats["hr_mean"] = float(np.mean(hr)); feats["hr_std"] = float(np.std(hr))
     feats["hr_min"]  = float(np.min(hr));  feats["hr_max"] = float(np.max(hr))
     feats["hr_range"]= float(np.max(hr)-np.min(hr))
     feats["hr_rmssd"]= float(np.sqrt(np.mean(np.diff(hr)**2)))
     feats["hr_trend"]= float(np.polyfit(np.arange(len(hr)), hr, 1)[0])
-    gsr = df["GSR"].values
     feats["gsr_mean"] = float(np.mean(gsr)); feats["gsr_std"] = float(np.std(gsr))
     feats["gsr_min"]  = float(np.min(gsr));  feats["gsr_max"] = float(np.max(gsr))
     feats["gsr_range"]= float(np.max(gsr)-np.min(gsr))
     peaks,_ = find_peaks(gsr, height=np.mean(gsr), distance=5)
     feats["gsr_peak_count"] = float(len(peaks))
-    feats["gsr_auc"]        = float(np.trapz(gsr))
-    temp = df["TEMP"].values
+    feats["gsr_auc"]        = float(np.trapezoid(gsr))
     feats["temp_mean"] = float(np.mean(temp)); feats["temp_std"] = float(np.std(temp))
     feats["temp_min"]  = float(np.min(temp));  feats["temp_max"] = float(np.max(temp))
     feats["temp_drift"]= float(temp[-1]-temp[0])

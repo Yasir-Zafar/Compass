@@ -166,6 +166,18 @@
   padding: 12px;
 }
 
+.detailed-section,
+.summary-section {
+  display: grid;
+  gap: 12px;
+}
+
+.summary-section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
 .clinical-table {
   width: 100%;
   border-collapse: collapse;

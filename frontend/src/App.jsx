@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import './App.css'
+import StreamEvents from './components/StreamEvents'
+import FusionResult from './components/FusionResult'
 
 const STEP_CONFIG = [
   {
@@ -95,6 +97,10 @@ function App() {
 
   const modalityRows = useMemo(
     () => events.filter((evt) => evt.event === 'modality'),
+    [events],
+  )
+  const modalityErrors = useMemo(
+    () => events.filter((evt) => evt.event === 'error' && evt.modality !== 'server' && evt.modality !== 'fusion'),
     [events],
   )
 
@@ -200,12 +206,16 @@ function App() {
     autoTable(doc, {
       startY: 44,
       head: [['Modality', 'Predicted Label', 'Top Feature', 'CV F1']],
-      body: modalityRows.map((row) => [
-        formatLabel(row.modality),
-        formatLabel(row.label),
-        row.top_feature || '-',
-        row.cv_f1?.toFixed(3) || '-',
-      ]),
+      body: STEP_CONFIG.map((item) => {
+        const row = modalityRows.find((evt) => evt.modality === item.key)
+        const err = modalityErrors.find((evt) => evt.modality === item.key)
+        return [
+          item.title,
+          row ? formatLabel(row.label) : 'Failed',
+          row?.top_feature || (err ? err.message : '-'),
+          row?.cv_f1?.toFixed(3) || '-',
+        ]
+      }),
     })
 
     autoTable(doc, {
@@ -343,6 +353,16 @@ function App() {
             <button className="ghost-btn" onClick={exportPdf}>Export PDF</button>
           </div>
 
+          <section className="detailed-section">
+            <h3>Detailed Multimodal Results</h3>
+            <p>Review all streamed modality outcomes and probability bars before reading the clinical summary.</p>
+            <StreamEvents events={events} />
+            <FusionResult result={report.fusion} />
+          </section>
+
+          <section className="summary-section">
+            <h3>Clinical Summary (Tabular)</h3>
+            <p>Structured summary suitable for sharing with clinicians.</p>
           <div className="result-banner">
             <div>
               <strong>Final Classification:</strong> {formatLabel(report.fusion.label)}
@@ -362,14 +382,18 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {modalityRows.map((row, idx) => (
-                <tr key={`${row.modality}-${idx}`}>
-                  <td>{formatLabel(row.modality)}</td>
-                  <td>{formatLabel(row.label)}</td>
-                  <td>{row.top_feature || '-'}</td>
-                  <td>{row.cv_f1?.toFixed(3) || '-'}</td>
+              {STEP_CONFIG.map((item) => {
+                const row = modalityRows.find((evt) => evt.modality === item.key)
+                const err = modalityErrors.find((evt) => evt.modality === item.key)
+                return (
+                <tr key={item.key}>
+                  <td>{item.title}</td>
+                  <td>{row ? formatLabel(row.label) : 'Failed'}</td>
+                  <td>{row?.top_feature || (err ? err.message : '-')}</td>
+                  <td>{row?.cv_f1?.toFixed(3) || '-'}</td>
                 </tr>
-              ))}
+                )
+              })}
             </tbody>
           </table>
 
@@ -391,6 +415,7 @@ function App() {
                 ))}
             </tbody>
           </table>
+          </section>
 
           <div className="action-row">
             <button className="ghost-btn" onClick={() => setStage('home')}>Back To Home</button>
