@@ -16,12 +16,13 @@
     # System dependencies required by your specific ML libraries
     buildDeps = with pkgs; [
       stdenv.cc.cc.lib
+      zlib
       libpqxx
       postgresql
-      libsndfile # Required by librosa
-      ffmpeg # Often required by librosa/opencv
-      glib # Required by opencv
-      libGL # Required by opencv
+      libsndfile
+      ffmpeg
+      glib
+      libGL
     ];
   in {
     devShells.${system}.default = pkgs.mkShell {
@@ -34,18 +35,21 @@
 
       # This is crucial for libraries like OpenCV and Scikit-learn to find system C++ libs
       LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath buildDeps;
-
       shellHook = ''
         export PYTHONPATH=$PWD
+        # Added zlib and ensured pathing is robust
+        export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath (buildDeps ++ [pkgs.zlib])}:$LD_LIBRARY_PATH"
 
-        # Initialize virtual env if it doesn't exist
         if [ ! -d .venv ]; then
-          echo "Creating virtual environment and installing dependencies..."
+          echo "Creating virtual environment..."
           uv venv .venv
           source .venv/bin/activate
 
-          # Install from your requirements.txt
-          # Using uv to handle the specific versions you requested
+          # This is the critical line:
+          echo "Installing core legacy compatibility..."
+          uv pip install "setuptools<71" packaging wheel
+
+          echo "Installing ML dependencies..."
           uv pip install \
             "fastapi==0.111.0" \
             "uvicorn[standard]==0.29.0" \
@@ -62,6 +66,8 @@
             "supabase"
         else
           source .venv/bin/activate
+          # Safety check: ensures it's installed even if venv existed
+          uv pip install "setuptools<71" packaging --quiet
         fi
 
         echo "🚀 SmartSales ML Environment Active"
