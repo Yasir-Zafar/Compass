@@ -1,0 +1,164 @@
+.health-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.health-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--border);
+}
+
+.health-card.healthy {
+  border-left-color: var(--success);
+  background: var(--success-bg);
+}
+
+.health-card.error {
+  border-left-color: var(--error);
+  background: var(--error-bg);
+}
+
+.health-card.loading {
+  border-left-color: var(--warning);
+}
+
+.health-card.unknown {
+  border-left-color: var(--text-muted);
+}
+
+.health-icon {
+  flex-shrink: 0;
+}
+
+.icon-ok {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--success);
+  color: white;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.icon-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--error);
+  color: white;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.icon-unknown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--text-muted);
+  color: white;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.health-info {
+  flex: 1;
+}
+
+.health-status {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.health-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.refresh-btn {
+  width: 100%;
+}
+
+.endpoints-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.endpoints-card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.endpoint-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.endpoint-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.method-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.method-badge.get {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.method-badge.post {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.endpoint-path {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  flex-shrink: 0;
+}
+
+.endpoint-desc {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-left: auto;
+}
