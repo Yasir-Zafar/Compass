@@ -1,0 +1,182 @@
+.model-info-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.info-loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.spinner-lg {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.info-error {
+  text-align: center;
+  padding: 24px;
+  color: var(--error);
+  font-size: 14px;
+}
+
+.info-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.info-card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.label-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.label-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.label-tag.typical { background: var(--success-bg); color: var(--success); }
+.label-tag.mild_asd { background: var(--warning-bg); color: var(--warning); }
+.label-tag.moderate_asd { background: #fff7ed; color: #ea580c; }
+.label-tag.severe_asd { background: var(--error-bg); color: var(--error); }
+
+.modality-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modality-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.modality-tag.physio { background: var(--physio-bg); color: var(--physio); }
+.modality-tag.motion { background: var(--motion-bg); color: var(--motion); }
+.modality-tag.voice { background: var(--voice-bg); color: var(--voice); }
+.modality-tag.image { background: var(--image-bg); color: var(--image); }
+
+.cv-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cv-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cv-label {
+  font-size: 13px;
+  color: var(--text-primary);
+  width: 70px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.cv-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-tab);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cv-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.cv-bar-fill.physio { background: var(--physio); }
+.cv-bar-fill.motion { background: var(--motion); }
+.cv-bar-fill.voice { background: var(--voice); }
+.cv-bar-fill.image { background: var(--image); }
+.cv-bar-fill.fusion { background: var(--fusion); }
+
+.cv-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 90px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.shap-importance {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shap-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shap-label {
+  font-size: 13px;
+  color: var(--text-primary);
+  width: 80px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.shap-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-tab);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.shap-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.shap-fill.physio { background: var(--physio); }
+.shap-fill.motion { background: var(--motion); }
+.shap-fill.voice { background: var(--voice); }
+.shap-fill.image { background: var(--image); }
+
+.shap-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 44px;
+  text-align: right;
+  flex-shrink: 0;
+}
