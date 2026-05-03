@@ -1,53 +1,137 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg: #f2f6fc;
-  --bg-card: #ffffff;
-  --bg-tab: #f0f4fa;
-  --text: #142033;
-  --text-primary: #142033;
-  --text-secondary: #617089;
-  --text-muted: #8a98ad;
-  --muted: #617089;
-  --card: #ffffff;
-  --border: #d9e3f2;
-  --primary: #1f6fe5;
-  --accent: #1f6fe5;
-  --accent-bg: #e8f0fe;
-  --success: #16a34a;
-  --success-bg: #dcfce7;
-  --warning: #d97706;
-  --warning-bg: #fef3c7;
-  --error: #dc2626;
-  --error-bg: #fef2f2;
-  --physio: #7c3aed;
-  --physio-bg: #ede9fe;
-  --motion: #2563eb;
-  --motion-bg: #dbeafe;
-  --voice: #0891b2;
-  --voice-bg: #cffafe;
-  --image: #be185d;
-  --image-bg: #fce7f3;
-  --fusion-bg: #fffbeb;
-  --radius: 14px;
-  --radius-sm: 10px;
-  --shadow: 0 2px 8px rgba(20, 42, 78, 0.05);
-  --shadow-lg: 0 10px 30px rgba(20, 42, 78, 0.08);
+  /* Color Palette - Professional Medical/Soft Blue Theme */
+  --primary: #2b5a9e;
+  --primary-hover: #1e4175;
+  --secondary: #e8f0fe;
+  --accent: #4a90e2;
+  --bg-color: #fcfcfd;
+  --text-main: #1d2b3a;
+  --text-muted: #5e6f82;
+  --border: #dce4f0;
+  --success: #28a745;
+  --error: #dc3545;
+  --white: #ffffff;
+  
+  --shadow-sm: 0 2px 4px rgba(43, 90, 158, 0.05);
+  --shadow-md: 0 4px 12px rgba(43, 90, 158, 0.08);
+  --shadow-lg: 0 12px 30px rgba(43, 90, 158, 0.12);
+  
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 }
 
-body {
-  font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  background: radial-gradient(circle at top right, #dde9ff, #f2f6fc 35%);
-  color: var(--text);
-  line-height: 1.5;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-#root {
-  width: min(980px, 92vw);
-  margin: 0 auto;
-  padding: 20px 0 40px;
+html, body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style-position: inside;
+}
+
+/* Base Button Styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary.large {
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  border-radius: var(--radius-lg);
+}
+
+.btn-primary.white-btn {
+  background-color: var(--white);
+  color: var(--primary);
+}
+
+.btn-primary.white-btn:hover {
+  background-color: var(--secondary);
+}
+
+.btn-ghost {
+  color: var(--primary);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  background-color: transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--secondary);
+}
+
+.btn-ghost.small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.btn-ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Background Utilities */
+.bg-light-blue {
+  background-color: #f5f8fc;
+}
+
+.bg-gradient-blue {
+  background: linear-gradient(135deg, var(--primary) 0%, #173868 100%);
+  color: var(--white);
+}
+
+.bg-gradient-blue h2, 
+.bg-gradient-blue p {
+  color: var(--white);
 }
